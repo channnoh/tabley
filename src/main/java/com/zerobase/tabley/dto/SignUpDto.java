@@ -20,6 +20,9 @@ public class SignUpDto {
      * @NotNull: 단순히 null만 허용하지 않음
      */
 
+    @NotBlank(message = "Id is required")
+    private String userId;
+
     @NotBlank(message = "Email is required")
     private String email;
 
@@ -41,6 +44,7 @@ public class SignUpDto {
      */
     public Member toEntity() {
         return Member.builder()
+                .userId(this.userId)
                 .email(this.email)
                 .userName(this.username)
                 .password(this.password)

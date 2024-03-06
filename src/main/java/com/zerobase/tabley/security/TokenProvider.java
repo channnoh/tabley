@@ -30,14 +30,14 @@ public class TokenProvider {
 
     /**
      * token 생성
-     * email을 기반으로 JWT 생성, token 유효시간 설정, HS512 알고리즘 사용하여 서명
+     * userId를 기반으로 JWT 생성, token 유효시간 설정, HS512 알고리즘 사용하여 서명
      * Claims: JWT의 payload
      * 클라이언트는 이후의 요청에서 이 토큰을 사용하여 인증가능
      * @return JWT 문자열
      */
-    public String generateToken(String email, MemberType memberType) {
+    public String generateToken(String userId, MemberType memberType) {
 
-        Claims claims = Jwts.claims().setSubject(email);
+        Claims claims = Jwts.claims().setSubject(userId);
         claims.put(MEMBER_TYPE, memberType);
 
         Date now = new Date();
@@ -53,20 +53,20 @@ public class TokenProvider {
 
     /**
      * JWT token으로 부터 인증 정보를 가져옴
-     * email을 JWT subject로 설정하였으므로 token을 JWT token에서 emial로 user 식별하여 UserDetail 추출
+     * userId을 JWT subject로 설정하였으므로 token을 JWT token에서 userId로 user 식별하여 UserDetail 추출
      * UsernamePasswordAuthenticationToken(UserDetail 객체, user password(JWT를 통해 이미 인증완료->빈문자열), 권한 collection)
      * @return 사용자의 정보와 사용자의 인증정보를 포함한 Authentication 객체
      */
     public Authentication getAuthentication(String jwt) {
-        UserDetails userDetails = memberService.loadUserByUsername(this.getUserEmail(jwt));
+        UserDetails userDetails = memberService.loadUserByUsername(this.getUserId(jwt));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
 
     /**
-     * token을 받아서 subject(email) 반환
+     * token을 받아서 subject(userId) 반환
      */
-    public String getUserEmail(String token) {
+    public String getUserId(String token) {
         return this.parseClaims(token).getSubject();
     }
 

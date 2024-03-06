@@ -22,8 +22,9 @@ import java.util.Collections;
 public class Member extends BaseEntity implements UserDetails {
 
     @Column(unique = true, nullable = false)
-    private String email;
+    private String userId;
 
+    private String email;
     private String userName;
     private String password;
     private String phone;
@@ -44,7 +45,7 @@ public class Member extends BaseEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return userName;
     }
 
     @Override

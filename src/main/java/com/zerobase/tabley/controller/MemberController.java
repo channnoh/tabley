@@ -29,7 +29,7 @@ public class MemberController {
     public ResponseEntity<?> signUp(@RequestBody @Valid SignUpDto request) {
         // 회원가입을 위한 API
         Member member = this.memberService.signUp(request);
-        log.info("user join -> {}", request.getEmail());
+        log.info("user join -> {}", request.getUserId());
         return ResponseEntity.ok(member);
     }
 
@@ -38,8 +38,8 @@ public class MemberController {
     public ResponseEntity<?> signIn(@RequestBody SignInDto request) {
         // 로그인용 API
         Member member = this.memberService.authenticate(request);
-        String token = this.tokenProvider.generateToken(member.getEmail(), member.getMemberType());
-        log.info("user login -> {} ", request.getEmail());
+        String token = this.tokenProvider.generateToken(member.getUserId(), member.getMemberType());
+        log.info("user login -> {} ", request.getUserId());
         return ResponseEntity.ok(token);
     }
 }
