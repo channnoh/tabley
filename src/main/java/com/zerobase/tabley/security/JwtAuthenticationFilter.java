@@ -36,6 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * 클라이언트가 보낸 HTTP 요청의 헤더에서 인증 토큰을 추출하고, 이 토큰이 유효한지 검사한 후,
      * 유효하다면 해당 사용자를 인증하여 Spring Security 컨텍스트에 사용자 인증 정보를 설정
      * 이 후 요청 처리 과정에서 현재 유저가 인증된 것으로 간주
+     * 컨트롤러 실행되기전에 수행
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -47,7 +48,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             Authentication auth = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
 
-            log.info(String.format("[%s] -> %s", tokenProvider.getUserId(token)), request.getRequestURI());
+            log.info(String.format("[%s] -> %s", tokenProvider.getUserId(token), request.getRequestURI()));
+        }else{
+            log.info("토큰 유효성 검증 실패");
         }
 
         filterChain.doFilter(request, response);

@@ -40,6 +40,7 @@ public class MemberController {
         Member member = this.memberService.authenticate(request);
         String token = this.tokenProvider.generateToken(member.getUserId(), member.getMemberType());
         log.info("user login -> {} ", request.getUserId());
+
         return ResponseEntity.ok(token);
     }
 }

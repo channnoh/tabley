@@ -38,8 +38,8 @@ public class MemberService implements UserDetailsService {
      */
 
     public Member signUp(SignUpDto member) {
-        boolean exits = this.memberRepository.existsByUserId(member.getUserId());
-        if (exits) {
+        boolean exists = this.memberRepository.existsByUserId(member.getUserId());
+        if (exists) {
             throw new CustomException(ALREADY_REGISTER_USER);
         }
 

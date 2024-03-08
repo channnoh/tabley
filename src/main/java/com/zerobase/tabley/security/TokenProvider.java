@@ -21,7 +21,7 @@ import java.util.Date;
 public class TokenProvider {
 
     private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 60; // token 만료 시간(1시간)
-    private static final String MEMBER_TYPE = "memberType";
+    private static final String KEY_ROLES = "roles";
     private final MemberService memberService;
 
     @Value("${jwt.secret}")
@@ -38,15 +38,15 @@ public class TokenProvider {
     public String generateToken(String userId, MemberType memberType) {
 
         Claims claims = Jwts.claims().setSubject(userId);
-        claims.put(MEMBER_TYPE, memberType);
+        claims.put(KEY_ROLES, memberType);
 
-        Date now = new Date();
-        Date exporedDate = new Date(now.getTime() + TOKEN_EXPIRE_TIME);
+        var now = new Date();
+        var expiredDate = new Date(now.getTime() + TOKEN_EXPIRE_TIME);
 
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(exporedDate)
+                .setExpiration(expiredDate)
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
@@ -59,6 +59,7 @@ public class TokenProvider {
      */
     public Authentication getAuthentication(String jwt) {
         UserDetails userDetails = memberService.loadUserByUsername(this.getUserId(jwt));
+
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
