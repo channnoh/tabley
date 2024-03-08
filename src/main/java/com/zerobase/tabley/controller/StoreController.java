@@ -19,6 +19,11 @@ public class StoreController {
 
     private final StoreService storeService;
 
+    /**
+     * @ApiOperation: swagger description
+     * @PreAuthorize: 메서드 실행하기 전에 권한 검사
+     */
+
     @ApiOperation("매장등록")
     @PreAuthorize("hasRole('PARTNER')")
     @PostMapping("/register")
