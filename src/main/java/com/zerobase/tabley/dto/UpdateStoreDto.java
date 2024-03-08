@@ -25,4 +25,5 @@ public class UpdateStoreDto {
         private StoreCategory storeCategory;
 
     }
+
 }

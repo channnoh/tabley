@@ -4,12 +4,12 @@ import com.zerobase.tabley.domain.Store;
 import com.zerobase.tabley.dto.RegisterStoreDto;
 import com.zerobase.tabley.dto.UpdateStoreDto;
 import com.zerobase.tabley.exception.CustomException;
-import com.zerobase.tabley.exception.ErrorCode;
 import com.zerobase.tabley.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import static com.zerobase.tabley.exception.ErrorCode.ALREADY_REGISTER_STORE_NAME;
+import static com.zerobase.tabley.exception.ErrorCode.STORE_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +22,7 @@ public class StoreService {
      * 매장 상호는 중복을 허용하지 않는다고 가정
      */
     public RegisterStoreDto.Response addStore(RegisterStoreDto.Request request) {
-        if (storeRepository.existsByStoreName(request.getStoreName())) {
+        if (storeRepository.existsStoresByUserId(request.getUserId())) {
             throw new CustomException(ALREADY_REGISTER_STORE_NAME);
         }
         Store savedStore = storeRepository.save(request.toEntity());
@@ -48,13 +48,16 @@ public class StoreService {
      * => AOP를 활용해볼 수 있지 않을까 고민
      */
     @Transactional
-    public void updateStore(String storeName, UpdateStoreDto.Request request) {
-        Store store = storeRepository.findByStoreName(storeName)
-                .orElseThrow(() -> new CustomException(ErrorCode.STORE_NOT_FOUND));
+    public void updateStore(String userId, UpdateStoreDto.Request request) {
+        Store store = storeRepository.findByUserId(userId)
+                .orElseThrow(() -> new CustomException(STORE_NOT_FOUND));
 
         updateStoreInfo(request, store);
     }
 
+    /**
+     * Update field null 체크
+     */
     private static void updateStoreInfo(UpdateStoreDto.Request request, Store store) {
         if (request.getOwner() != null) store.setOwner(request.getOwner());
         if (request.getStoreName() != null) store.setStoreName(request.getStoreName());
@@ -64,6 +67,14 @@ public class StoreService {
         if (request.getOpenAt() != null) store.setOpenAt(request.getOpenAt());
         if (request.getClosedAt() != null) store.setClosedAt(request.getClosedAt());
         if (request.getStoreCategory() != null) store.setStoreCategory(request.getStoreCategory());
+    }
+
+    @Transactional
+    public void deleteStore(String userId) {
+        if (!storeRepository.existsStoresByUserId(userId)) {
+            throw new CustomException(STORE_NOT_FOUND);
+        }
+        storeRepository.deleteStoreByUserId(userId);
     }
 
 

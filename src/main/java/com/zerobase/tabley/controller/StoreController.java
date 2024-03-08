@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 @Slf4j
@@ -30,19 +31,26 @@ public class StoreController {
     public ResponseEntity<?> registerStore(@RequestBody @Valid RegisterStoreDto.Request request) {
         RegisterStoreDto.Response savedStore = storeService.addStore(request);
 
-        log.info("store register -> {}", request.getStoreName());
         return ResponseEntity.ok(savedStore);
     }
 
     @ApiOperation("매장정보 수정")
     @PreAuthorize("hasRole('PARTNER')")
-    @PostMapping("/update/{storeName}")
-    public String updateStore(@PathVariable String storeName,
+    @PostMapping("/{userId}")
+    public String updateStore(@PathVariable String userId,
                               @RequestBody @Valid UpdateStoreDto.Request request) {
-        storeService.updateStore(storeName, request);
+        storeService.updateStore(userId, request);
 
-        log.info("store update");
         return "매장등록 완료";
+    }
+
+    @ApiOperation("매장삭제")
+    @PreAuthorize("hasRole('PARTNER')")
+    @DeleteMapping("/{userId}")
+    public String deleteStore(@PathVariable String userId) {
+        storeService.deleteStore(userId);
+
+        return "매장삭제 완료";
     }
 
 
