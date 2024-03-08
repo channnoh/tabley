@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     ALREADY_REGISTER_USER(HttpStatus.BAD_REQUEST, "이미 가입된 회원입니다."),
     ID_NOT_FOUND(HttpStatus.BAD_REQUEST, "일치하는 아이디가 없습니다."),
-    WRONG_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다");
+    WRONG_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다"),
+    STORE_NOT_FOUND(HttpStatus.BAD_REQUEST, "존재하지 않는 매장입니다."),
+    ALREADY_REGISTER_STORE_NAME(HttpStatus.BAD_REQUEST, "이미 존재하는 매장 상호입니다. ");
 
 
 

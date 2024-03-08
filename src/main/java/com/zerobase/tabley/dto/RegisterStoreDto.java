@@ -3,7 +3,6 @@ package com.zerobase.tabley.dto;
 import com.zerobase.tabley.domain.Store;
 import com.zerobase.tabley.type.StoreCategory;
 import lombok.*;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;

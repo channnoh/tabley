@@ -3,7 +3,6 @@ package com.zerobase.tabley.dto;
 import com.zerobase.tabley.domain.Member;
 import com.zerobase.tabley.type.MemberType;
 import lombok.*;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 

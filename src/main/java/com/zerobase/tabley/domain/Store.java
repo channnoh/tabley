@@ -2,7 +2,6 @@ package com.zerobase.tabley.domain;
 
 import com.zerobase.tabley.type.StoreCategory;
 import lombok.*;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

@@ -1,7 +1,6 @@
 package com.zerobase.tabley.domain;
 
 import lombok.*;
-
 import javax.persistence.Entity;
 
 @Entity
