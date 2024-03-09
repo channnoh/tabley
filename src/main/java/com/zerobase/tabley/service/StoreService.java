@@ -70,7 +70,7 @@ public class StoreService {
         if (request.getStoreName() != null) store.setStoreName(request.getStoreName());
         if (request.getStoreAddress() != null) store.setStoreAddress(request.getStoreAddress());
         if (request.getDescription() != null) store.setDescription(request.getDescription());
-        if (request.getStorePhone() != null) store.setStorePhone(request.getStorePhone());
+        if (request.getContact() != null) store.setContact(request.getContact());
         if (request.getOpenAt() != null) store.setOpenAt(request.getOpenAt());
         if (request.getClosedAt() != null) store.setClosedAt(request.getClosedAt());
         if (request.getLat() != null) store.setLat(request.getLat());

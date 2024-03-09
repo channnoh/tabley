@@ -17,7 +17,7 @@ public class UpdateStoreDto {
         private String storeName;
         private String storeAddress;
         private String description;
-        private String storePhone;
+        private String contact;
         private LocalTime openAt;
         private LocalTime closedAt;
         private StoreCategory storeCategory;

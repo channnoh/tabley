@@ -17,7 +17,7 @@ public class StoreInfoDto {
     private String storeName;
     private String storeAddress;
     private String description;
-    private String storePhone;
+    private String contact;
     private LocalTime openAt;
     private LocalTime closedAt;
     private String owner;
@@ -29,7 +29,7 @@ public class StoreInfoDto {
                 .storeName(store.getStoreName())
                 .storeAddress(store.getStoreAddress())
                 .description(store.getDescription())
-                .storePhone(store.getStorePhone())
+                .contact(store.getContact())
                 .openAt(store.getOpenAt())
                 .closedAt(store.getClosedAt())
                 .owner(store.getOwner())
@@ -43,7 +43,7 @@ public class StoreInfoDto {
                 .storeName(store.getStoreName())
                 .storeAddress(store.getStoreAddress())
                 .description(store.getDescription())
-                .storePhone(store.getStorePhone())
+                .contact(store.getContact())
                 .openAt(store.getOpenAt())
                 .closedAt(store.getClosedAt())
                 .owner(store.getOwner())

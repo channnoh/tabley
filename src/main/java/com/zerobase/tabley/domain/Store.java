@@ -2,11 +2,11 @@ package com.zerobase.tabley.domain;
 
 import com.zerobase.tabley.type.StoreCategory;
 import lombok.*;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+
+import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -16,14 +16,26 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class Store extends BaseEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "STORE_ID")
+    private Long id;
+
     @Column(unique = true, nullable = false)
     private String userId;
 
     private String owner;
     private String storeName;
     private String storeAddress;
+
+    /**
+     * 매장 설명은 길이 제한을 두지 않기 위해서 @Lob 어노테이션 붙여서
+     * CLOB으로 매핑(문자열)
+     * */
+    @Lob
     private String description;
-    private String storePhone;
+
+    private String contact;
     private LocalTime openAt;
     private LocalTime closedAt;
     private Double lat;
@@ -34,6 +46,9 @@ public class Store extends BaseEntity {
 
     @Builder.Default
     private Double rating = 0.0;
+
+    @OneToMany(mappedBy = "store")
+    private List<Reservation> reservationList = new ArrayList<>();
 
 
     /**

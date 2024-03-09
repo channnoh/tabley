@@ -31,8 +31,8 @@ public class RegisterStoreDto {
         @NotBlank(message = "description is required")
         private String description;
 
-        @NotBlank(message = "storePhone is required")
-        private String storePhone;
+        @NotBlank(message = "Store number is required")
+        private String contact;
 
         @NotNull(message = "open time is required")
         private LocalTime openAt;
@@ -56,7 +56,7 @@ public class RegisterStoreDto {
                     .storeName(storeName)
                     .storeAddress(storeAddress)
                     .description(description)
-                    .storePhone(storePhone)
+                    .contact(contact)
                     .openAt(openAt)
                     .closedAt(closedAt)
                     .storeCategory(storeCategory)
@@ -73,7 +73,7 @@ public class RegisterStoreDto {
         private String storeName;
         private String storeAddress;
         private String description;
-        private String storePhone;
+        private String contact;
         private String owner;
         private LocalTime openAt;
         private LocalTime closedAt;
@@ -84,7 +84,7 @@ public class RegisterStoreDto {
                     .storeName(store.getStoreName())
                     .storeAddress(store.getStoreAddress())
                     .description(store.getDescription())
-                    .storePhone(store.getStorePhone())
+                    .contact(store.getContact())
                     .owner(store.getOwner())
                     .openAt(store.getOpenAt())
                     .closedAt(store.getClosedAt())

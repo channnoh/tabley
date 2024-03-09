@@ -50,7 +50,7 @@ public class StoreController {
 
     @ApiOperation("매장삭제")
     @PreAuthorize("hasRole('PARTNER')")
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{storeName}")
     public String deleteStore(@PathVariable String storeName) {
         storeService.deleteStore(storeName);
 
@@ -64,8 +64,8 @@ public class StoreController {
     @ApiOperation("정렬 기준에 맞게 매장 목록 조회")
     @GetMapping("/list")
     public ResponseEntity<?> getStoreList(@PageableDefault(sort = "storeName") Pageable pageable) {
-        Page<StoreInfoDto> storePage = storeService.getStorePage(pageable);
-        return ResponseEntity.ok(storePage);
+        Page<StoreInfoDto> storeList = storeService.getStorePage(pageable);
+        return ResponseEntity.ok(storeList);
     }
 
 
