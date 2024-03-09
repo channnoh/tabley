@@ -11,7 +11,8 @@ public enum ErrorCode {
     ID_NOT_FOUND(HttpStatus.BAD_REQUEST, "일치하는 아이디가 없습니다."),
     WRONG_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다"),
     STORE_NOT_FOUND(HttpStatus.BAD_REQUEST, "존재하지 않는 매장입니다."),
-    ALREADY_REGISTER_STORE_NAME(HttpStatus.BAD_REQUEST, "이미 존재하는 매장 상호입니다. ");
+    ALREADY_REGISTER_STORE_USER(HttpStatus.BAD_REQUEST, "이 사용자는 이미 매장을 등록했습니다."),
+    ALREADY_EXISTS_STORE(HttpStatus.BAD_REQUEST, "이미 존재하는 매장 상호입니다. ");
 
 
 

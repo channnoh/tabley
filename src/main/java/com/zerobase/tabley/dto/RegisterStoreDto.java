@@ -11,6 +11,7 @@ public class RegisterStoreDto {
 
     @Getter
     @Setter
+    @Builder
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Request {
@@ -38,6 +39,12 @@ public class RegisterStoreDto {
 
         @NotNull(message = "closed time is required")
         private LocalTime closedAt;
+
+        @Builder.Default
+        private Double lat = 0.0;
+
+        @Builder.Default
+        private Double lnt = 0.0;
 
         @NotNull
         private StoreCategory storeCategory;
@@ -70,7 +77,7 @@ public class RegisterStoreDto {
         private String owner;
         private LocalTime openAt;
         private LocalTime closedAt;
-        private Double rating;
+        private StoreCategory storeCategory;
 
         public static Response fromEntity(Store store) {
             return Response.builder()
@@ -81,7 +88,7 @@ public class RegisterStoreDto {
                     .owner(store.getOwner())
                     .openAt(store.getOpenAt())
                     .closedAt(store.getClosedAt())
-                    .rating(store.getRating())
+                    .storeCategory(store.getStoreCategory())
                     .build();
         }
     }

@@ -1,10 +1,8 @@
 package com.zerobase.tabley.dto;
 
 import com.zerobase.tabley.type.StoreCategory;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.time.LocalTime;
 
 public class UpdateStoreDto {
@@ -23,6 +21,8 @@ public class UpdateStoreDto {
         private LocalTime openAt;
         private LocalTime closedAt;
         private StoreCategory storeCategory;
+        private Double lat = 0.0;
+        private Double lnt = 0.0;
 
     }
 

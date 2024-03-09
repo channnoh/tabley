@@ -2,14 +2,17 @@ package com.zerobase.tabley.service;
 
 import com.zerobase.tabley.domain.Store;
 import com.zerobase.tabley.dto.RegisterStoreDto;
+import com.zerobase.tabley.dto.StoreInfoDto;
 import com.zerobase.tabley.dto.UpdateStoreDto;
 import com.zerobase.tabley.exception.CustomException;
 import com.zerobase.tabley.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import static com.zerobase.tabley.exception.ErrorCode.ALREADY_REGISTER_STORE_NAME;
-import static com.zerobase.tabley.exception.ErrorCode.STORE_NOT_FOUND;
+
+import static com.zerobase.tabley.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -19,11 +22,15 @@ public class StoreService {
 
 
     /**
+     * 파트너 한명 당 매장 하나 등록가능
      * 매장 상호는 중복을 허용하지 않는다고 가정
      */
     public RegisterStoreDto.Response addStore(RegisterStoreDto.Request request) {
-        if (storeRepository.existsStoresByUserId(request.getUserId())) {
-            throw new CustomException(ALREADY_REGISTER_STORE_NAME);
+        if(storeRepository.existsStoresByUserId(request.getUserId())){
+            throw new CustomException(ALREADY_REGISTER_STORE_USER);
+        }
+        if (storeRepository.existsStoresByStoreName(request.getStoreName())) {
+            throw new CustomException(ALREADY_EXISTS_STORE);
         }
         Store savedStore = storeRepository.save(request.toEntity());
         return RegisterStoreDto.Response.fromEntity(savedStore);
@@ -66,16 +73,39 @@ public class StoreService {
         if (request.getStorePhone() != null) store.setStorePhone(request.getStorePhone());
         if (request.getOpenAt() != null) store.setOpenAt(request.getOpenAt());
         if (request.getClosedAt() != null) store.setClosedAt(request.getClosedAt());
+        if (request.getLat() != null) store.setLat(request.getLat());
+        if (request.getLnt() != null) store.setLnt(request.getLnt());
         if (request.getStoreCategory() != null) store.setStoreCategory(request.getStoreCategory());
     }
 
     @Transactional
-    public void deleteStore(String userId) {
-        if (!storeRepository.existsStoresByUserId(userId)) {
+    public void deleteStore(String storeName) {
+        if (!storeRepository.existsStoresByStoreName(storeName)) {
             throw new CustomException(STORE_NOT_FOUND);
         }
-        storeRepository.deleteStoreByUserId(userId);
+        storeRepository.deleteStoreByStoreName(storeName);
     }
 
+    /**
+     * Pageable parameter로 받아와서 정렬 기준에 따라 JPA paging 처리
+     * default는 매장이름순
+     */
+
+    public Page<StoreInfoDto> getStorePage(Pageable pageable) {
+        Page<Store> page = storeRepository.findAll(pageable);
+        return StoreInfoDto.toDto(page);
+    }
+
+
+    /**
+     * 사용자가 매장 상세 정보 조회 가능한 서비스 메서드
+     */
+
+    public StoreInfoDto getStoreInfo(String storeName) {
+        Store store = storeRepository.findByStoreName(storeName)
+                .orElseThrow(() -> new CustomException(STORE_NOT_FOUND));
+
+        return StoreInfoDto.fromEntity(store);
+    }
 
 }

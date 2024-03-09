@@ -26,6 +26,8 @@ public class Store extends BaseEntity {
     private String storePhone;
     private LocalTime openAt;
     private LocalTime closedAt;
+    private Double lat;
+    private Double lnt;
 
     @Enumerated(EnumType.STRING)
     private StoreCategory storeCategory;
