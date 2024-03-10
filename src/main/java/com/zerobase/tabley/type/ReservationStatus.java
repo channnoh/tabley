@@ -3,5 +3,8 @@ package com.zerobase.tabley.type;
 public enum ReservationStatus {
     APPROVAL,
     WAITING,
-    REFUSAL;
+    REFUSAL,
+    FINAL_CHECK
+    ;
+
 }

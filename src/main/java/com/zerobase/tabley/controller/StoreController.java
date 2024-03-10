@@ -42,10 +42,10 @@ public class StoreController {
     @PreAuthorize("hasRole('PARTNER')")
     @PostMapping("/{userId}")
     public String updateStore(@PathVariable String userId,
-                              @RequestBody @Valid UpdateStoreDto.Request request) {
+                              @RequestBody UpdateStoreDto.Request request) {
         storeService.updateStore(userId, request);
 
-        return "매장등록 완료";
+        return "매장정보 수정 완료";
     }
 
     @ApiOperation("매장삭제")

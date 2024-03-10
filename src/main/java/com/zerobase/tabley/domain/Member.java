@@ -48,7 +48,7 @@ public class Member extends BaseEntity implements UserDetails {
      */
 
     @OneToMany(mappedBy = "member")
-    private List<Reservation> reservationList = new ArrayList<>();;
+    private List<Reservation> reservationList = new ArrayList<>();
 
 
     /**

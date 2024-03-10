@@ -6,6 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static com.zerobase.tabley.type.ReservationStatus.*;
+
 @Entity
 @Builder
 @Getter
@@ -23,9 +25,7 @@ public class Reservation extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private ReservationStatus reservationStatus = ReservationStatus.WAITING;
-
-    private boolean isVisited;
+    private ReservationStatus reservationStatus = WAITING;
 
     /**
      * JPA 연관관계 매핑

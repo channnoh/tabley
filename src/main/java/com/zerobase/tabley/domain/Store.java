@@ -51,12 +51,6 @@ public class Store extends BaseEntity {
     private List<Reservation> reservationList = new ArrayList<>();
 
 
-    /**
-     * mapping 미완료
-     */
-//    @OneToMany
-//    private List<Reservation> reservationList;
-//
 //    @OneToMany
 //    private List<Review> reviews;
 
