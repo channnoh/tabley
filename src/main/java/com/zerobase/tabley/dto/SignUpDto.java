@@ -3,6 +3,7 @@ package com.zerobase.tabley.dto;
 import com.zerobase.tabley.domain.Member;
 import com.zerobase.tabley.type.MemberType;
 import lombok.*;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -32,7 +33,7 @@ public class SignUpDto {
     private String password;
 
     @NotBlank(message = "Phone number is required")
-    private String phone;
+    private String phoneNumber;
 
     @NotNull
     private MemberType memberType;
@@ -47,7 +48,7 @@ public class SignUpDto {
                 .email(this.email)
                 .userName(this.username)
                 .password(this.password)
-                .phone(this.phone)
+                .phoneNumber(this.phoneNumber)
                 .memberType(this.memberType)
                 .build();
     }

@@ -4,10 +4,10 @@ import com.zerobase.tabley.domain.Member;
 import com.zerobase.tabley.domain.Reservation;
 import com.zerobase.tabley.domain.Store;
 import com.zerobase.tabley.dto.ApproveReservationDTO;
+import com.zerobase.tabley.dto.ConfirmVisitDto;
 import com.zerobase.tabley.dto.MakeReservationDto;
 import com.zerobase.tabley.dto.PartnerReservationDto;
 import com.zerobase.tabley.exception.CustomException;
-import com.zerobase.tabley.repository.MemberRepository;
 import com.zerobase.tabley.repository.ReservationRepository;
 import com.zerobase.tabley.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 import static com.zerobase.tabley.exception.ErrorCode.*;
+import static com.zerobase.tabley.type.ReservationStatus.APPROVAL;
+import static com.zerobase.tabley.type.ReservationStatus.VISIT_CONFIRMED;
 
 @Slf4j
 @Service
@@ -30,7 +32,6 @@ import static com.zerobase.tabley.exception.ErrorCode.*;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-    private final MemberRepository memberRepository;
     private final StoreRepository storeRepository;
 
 
@@ -82,7 +83,7 @@ public class ReservationService {
     /**
      * 해당 예약날짜의 예약 내역 리스트를 paging 처리해서 반환
      */
-    public Page<PartnerReservationDto.Response> reservationListForPartnerByDate(LocalDate date, Integer page, Member member){
+    public Page<PartnerReservationDto.Response> reservationListForPartnerByDate(LocalDate date, Integer page, Member member) {
 
         Store store = storeRepository.findByUserId(member.getUserId())
                 .orElseThrow(() -> new CustomException(STORE_NOT_FOUND));
@@ -95,7 +96,7 @@ public class ReservationService {
                         PageRequest.of(page, 10)
                 );
 
-        if(reservations.getSize() == 0){
+        if (reservations.getSize() == 0) {
             throw new CustomException(RESERVATION_NOT_FOUND_FOR_DATE);
         }
         return reservations.map(PartnerReservationDto.Response::fromEntity);
@@ -116,7 +117,7 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new CustomException(RESERVATION_NOT_FOUND));
 
-        if(reservation.getStore().getUserId().equals(partner.getUserId())){
+        if (!reservation.getStore().getUserId().equals(partner.getUserId())) {
             throw new CustomException(ACCESS_DENIED_RESERVATION_APPROVAL);
         }
 
@@ -128,6 +129,44 @@ public class ReservationService {
         }
 
         return ApproveReservationDTO.Response.fromEntity(reservation);
+    }
+
+    @Transactional
+    public ConfirmVisitDto.Response confirmVisit(Long reservationId, ConfirmVisitDto.Request confirmVisitRequest) {
+
+        Reservation reservation = validateVisitConfirmation(reservationId, confirmVisitRequest);
+        reservation.setReservationStatus(VISIT_CONFIRMED);
+
+        return ConfirmVisitDto.Response.fromEntity(reservation.getStore().getStoreName());
+    }
+
+    private Reservation validateVisitConfirmation(Long reservationId, ConfirmVisitDto.Request confirmVisitRequest) {
+
+        // 존재하는 예약내역인지 검증
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new CustomException(RESERVATION_NOT_FOUND));
+
+        // 입력된 핸드폰 번호와 예약자의 핸드폰 번호가 일치하는지 검증
+        if (!reservation.getMember().getPhoneNumber().equals(confirmVisitRequest.getPhoneNumber())) {
+            throw new CustomException(WRONG_RESERVATION_USER_INFORMATION);
+        }
+
+        // 이미 방문 확인된 예약인지 검증
+        if (reservation.getReservationStatus().equals(VISIT_CONFIRMED)) {
+            throw new CustomException(ALREADY_CONFIRMED_RESERVATION);
+        }
+
+        // 예약상태가 승인 상태인지 검증
+        if (!reservation.getReservationStatus().equals(APPROVAL)) {
+            throw new CustomException(UNAPPROVED_RESERVATION_BY_OWNER);
+        }
+
+        // 예약시간 10분 전에 도착했는지 검증
+        if (!confirmVisitRequest.getArrivalTime().isBefore(reservation.getReservationDate().minusMinutes(10))) {
+            throw new CustomException(RESERVATION_CHECK_IN_TIME_EXPIRED);
+        }
+
+        return reservation;
     }
 
 }

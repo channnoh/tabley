@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-import static com.zerobase.tabley.type.ReservationStatus.*;
+import static com.zerobase.tabley.type.ReservationStatus.WAITING;
 
 @Entity
 @Builder

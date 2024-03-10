@@ -1,7 +1,10 @@
 package com.zerobase.tabley.dto;
 
 import com.zerobase.tabley.type.StoreCategory;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalTime;
 

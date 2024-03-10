@@ -4,7 +4,6 @@ public enum ReservationStatus {
     APPROVAL,
     WAITING,
     REFUSAL,
-    FINAL_CHECK
-    ;
+    VISIT_CONFIRMED
 
 }

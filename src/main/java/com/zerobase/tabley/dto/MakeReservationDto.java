@@ -6,6 +6,7 @@ import com.zerobase.tabley.domain.Reservation;
 import com.zerobase.tabley.domain.Store;
 import com.zerobase.tabley.type.ReservationStatus;
 import lombok.*;
+
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 

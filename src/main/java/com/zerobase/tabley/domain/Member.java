@@ -31,7 +31,9 @@ public class Member extends BaseEntity implements UserDetails {
     private String email;
     private String userName;
     private String password;
-    private String phone;
+
+    @Column(unique = true, nullable = false)
+    private String phoneNumber;
 
     /**
      * 자바 enum 타입 사용하려면 @Enumerated 어노테이션 붙여야함

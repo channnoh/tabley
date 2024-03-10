@@ -3,6 +3,7 @@ package com.zerobase.tabley.dto;
 import com.zerobase.tabley.domain.Reservation;
 import com.zerobase.tabley.type.ReservationStatus;
 import lombok.*;
+
 import java.time.LocalDateTime;
 
 public class PartnerReservationDto {
@@ -25,7 +26,7 @@ public class PartnerReservationDto {
             return Response.builder()
                     .storeName(reservation.getStore().getStoreName())
                     .userId(reservation.getMember().getUserId())
-                    .userPhone(reservation.getMember().getPhone())
+                    .userPhone(reservation.getMember().getPhoneNumber())
                     .userEmail(reservation.getMember().getEmail())
                     .reservationDate(reservation.getReservationDate())
                     .reservationStatus(reservation.getReservationStatus())

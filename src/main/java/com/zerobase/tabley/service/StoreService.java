@@ -26,7 +26,7 @@ public class StoreService {
      * 매장 상호는 중복을 허용하지 않는다고 가정
      */
     public RegisterStoreDto.Response addStore(RegisterStoreDto.Request request) {
-        if(storeRepository.existsStoresByUserId(request.getUserId())){
+        if (storeRepository.existsStoresByUserId(request.getUserId())) {
             throw new CustomException(ALREADY_REGISTER_STORE_USER);
         }
         if (storeRepository.existsStoresByStoreName(request.getStoreName())) {
@@ -67,15 +67,21 @@ public class StoreService {
      */
     private static void updateStoreInfo(UpdateStoreDto.Request request, Store store) {
         if (request.getOwner() != null) store.setOwner(request.getOwner());
-        if (request.getStoreName() != null) store.setStoreName(request.getStoreName());
-        if (request.getStoreAddress() != null) store.setStoreAddress(request.getStoreAddress());
-        if (request.getDescription() != null) store.setDescription(request.getDescription());
-        if (request.getContact() != null) store.setContact(request.getContact());
+        if (request.getStoreName() != null)
+            store.setStoreName(request.getStoreName());
+        if (request.getStoreAddress() != null)
+            store.setStoreAddress(request.getStoreAddress());
+        if (request.getDescription() != null)
+            store.setDescription(request.getDescription());
+        if (request.getContact() != null)
+            store.setContact(request.getContact());
         if (request.getOpenAt() != null) store.setOpenAt(request.getOpenAt());
-        if (request.getClosedAt() != null) store.setClosedAt(request.getClosedAt());
+        if (request.getClosedAt() != null)
+            store.setClosedAt(request.getClosedAt());
         if (request.getLat() != null) store.setLat(request.getLat());
         if (request.getLnt() != null) store.setLnt(request.getLnt());
-        if (request.getStoreCategory() != null) store.setStoreCategory(request.getStoreCategory());
+        if (request.getStoreCategory() != null)
+            store.setStoreCategory(request.getStoreCategory());
     }
 
     @Transactional

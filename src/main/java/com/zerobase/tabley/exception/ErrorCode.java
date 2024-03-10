@@ -17,7 +17,14 @@ public enum ErrorCode {
     ACCESS_DENIED_RESERVATION_APPROVAL(HttpStatus.BAD_REQUEST, "해당 매장의 예약을 승인할 수 있는 권한이 없습니다."),
     RESERVATION_ALREADY_FULL(HttpStatus.BAD_REQUEST, "예약이 가득 차있습니다."),
     RESERVATION_NOT_FOUND_FOR_DATE(HttpStatus.BAD_REQUEST, "해당 날짜에 예약이 없습니다."),
-    WRONG_RESERVATION_DATETIME(HttpStatus.BAD_REQUEST, "예약 날짜가 올바르지 않습니다.");
+    WRONG_RESERVATION_DATETIME(HttpStatus.BAD_REQUEST, "예약 날짜가 올바르지 않습니다."),
+    WRONG_RESERVATION_USER_INFORMATION(HttpStatus.BAD_REQUEST, "예약자 정보가 일치하지 않습니다."),
+    UNAPPROVED_RESERVATION_BY_OWNER(HttpStatus.BAD_REQUEST, "매장 점주로 부터 승인되지 않은 예약입니다."),
+    ALREADY_CONFIRMED_RESERVATION(HttpStatus.BAD_REQUEST, "이미 방문 확인이 완료된 예약입니다."),
+    RESERVATION_CHECK_IN_TIME_EXPIRED(HttpStatus.BAD_REQUEST, "예약 방문확인 시간이 지났습니다.");
+
+
+
 
 
 
