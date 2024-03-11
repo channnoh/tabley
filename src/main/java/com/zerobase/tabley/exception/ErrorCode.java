@@ -26,6 +26,7 @@ public enum ErrorCode {
     ACCESS_DENIED_REVIEW_AFTER_RESERVATION(HttpStatus.BAD_REQUEST, "매장 사용 후에 리뷰를 작성할 수 있습니다."),
     REVIEW_WRITE_PERIOD_EXPIRED(HttpStatus.BAD_REQUEST, "리뷰 작성 기간이 지났습니다."),
     REVIEW_NOT_FOUND(HttpStatus.BAD_REQUEST, "작성된 리뷰가 없습니다."),
+    ACCESS_DENIED_REVIEW_DELETE(HttpStatus.BAD_REQUEST, "리뷰 삭제 권한이 없습니다."),
     NO_CHANGES_DETECTED(HttpStatus.BAD_REQUEST, "변경 내역이 없습니다.");
 
 

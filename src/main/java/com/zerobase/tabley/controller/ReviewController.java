@@ -1,6 +1,7 @@
 package com.zerobase.tabley.controller;
 
 import com.zerobase.tabley.domain.Member;
+import com.zerobase.tabley.dto.DeleteReviewDto;
 import com.zerobase.tabley.dto.UpdateReviewDto;
 import com.zerobase.tabley.dto.WriteReviewDto;
 import com.zerobase.tabley.service.ReviewService;
@@ -40,6 +41,16 @@ public class ReviewController {
         UpdateReviewDto.Response updatedReview = reviewService.updateReview(reservationId, request, user);
 
         return ResponseEntity.ok(updatedReview);
+    }
+
+    @ApiOperation("리뷰 삭제 API 입니다.")
+    @PreAuthorize("hasRole('USER') or hasRole('PARTNER')")
+    @DeleteMapping("/{reviewId}")
+    public ResponseEntity<?> deleteReview(@PathVariable Long reviewId,
+                                          @AuthenticationPrincipal Member user) {
+        DeleteReviewDto deleteReviewResponse = reviewService.deleteReview(reviewId, user);
+
+        return ResponseEntity.ok(deleteReviewResponse);
     }
 
 

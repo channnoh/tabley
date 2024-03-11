@@ -3,11 +3,13 @@ package com.zerobase.tabley.service;
 import com.zerobase.tabley.domain.Member;
 import com.zerobase.tabley.domain.Reservation;
 import com.zerobase.tabley.domain.Review;
+import com.zerobase.tabley.dto.DeleteReviewDto;
 import com.zerobase.tabley.dto.UpdateReviewDto;
 import com.zerobase.tabley.dto.WriteReviewDto;
 import com.zerobase.tabley.exception.CustomException;
 import com.zerobase.tabley.repository.ReservationRepository;
 import com.zerobase.tabley.repository.ReviewRepository;
+import com.zerobase.tabley.type.MemberType;
 import com.zerobase.tabley.type.ReservationStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static com.zerobase.tabley.exception.ErrorCode.*;
-import static com.zerobase.tabley.type.ReviewStatus.NOT_WRITTEN;
-import static com.zerobase.tabley.type.ReviewStatus.WRITTEN;
+import static com.zerobase.tabley.type.ReviewStatus.*;
 
 @Slf4j
 @Service
@@ -53,7 +54,7 @@ public class ReviewService {
             throw new CustomException(ACCESS_DENIED_REVIEW_WRITE);
         }
 
-        if (LocalDateTime.now().isAfter(reservation.getReservationDate().plusDays(3))){
+        if (LocalDateTime.now().isAfter(reservation.getReservationDate().plusDays(3))) {
             throw new CustomException(REVIEW_WRITE_PERIOD_EXPIRED);
         }
 
@@ -100,6 +101,27 @@ public class ReviewService {
         return UpdateReviewDto.Response.from(updatedReview);
     }
 
+    @Transactional
+    public DeleteReviewDto deleteReview(Long reviewId, Member member) {
+
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new CustomException(REVIEW_NOT_FOUND));
+
+        // 로그인 유저가 예약자인지 or 리뷰가 작성된 가게의 점주인지 검증
+        if (!((member.getId().equals(review.getReservation().getMember().getId())) || (member.getUserId().equals(review.getStore().getUserId())))) {
+            throw new CustomException(ACCESS_DENIED_REVIEW_DELETE);
+        }
+
+        // reservation review 참조 끊기
+        Reservation reservation = review.getReservation();
+        reservation.setReview(null);
+        reservation.setReviewStatus(DELETED);
+
+        DeleteReviewDto deleteReviewDto = DeleteReviewDto.from(review);
+        reviewRepository.deleteReviewById(reviewId);
+
+        return deleteReviewDto;
+    }
 
 
 }
