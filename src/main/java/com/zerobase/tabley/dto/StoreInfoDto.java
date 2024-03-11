@@ -38,18 +38,4 @@ public class StoreInfoDto {
                 .build();
     }
 
-    public static Page<StoreInfoDto> toDto(Page<Store> page) {
-        return page.map(store -> StoreInfoDto.builder()
-                .storeName(store.getStoreName())
-                .storeAddress(store.getStoreAddress())
-                .description(store.getDescription())
-                .contact(store.getContact())
-                .openAt(store.getOpenAt())
-                .closedAt(store.getClosedAt())
-                .owner(store.getOwner())
-                .storeCategory(store.getStoreCategory())
-                .rating(store.getRating())
-                .build());
-
-    }
 }

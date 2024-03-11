@@ -61,10 +61,10 @@ public class StoreController {
      *  가정렬 기준에 따른 매장 목록 조회
      */
 
-    @ApiOperation("정렬 기준에 맞게 매장 목록 조회하는 API 입니다.")
+    @ApiOperation("정렬 기준에 맞게 매장 목록을 조회하는 API 입니다.")
     @GetMapping("/list")
-    public ResponseEntity<?> getStoreList(@PageableDefault(sort = "storeName") Pageable pageable) {
-        Page<StoreInfoDto> storeList = storeService.getStorePage(pageable);
+    public ResponseEntity<?> getStoreList(@RequestParam(value = "page") Integer page, String criteria) {
+        Page<StoreInfoDto> storeList = storeService.getStorePage(page, criteria);
         return ResponseEntity.ok(storeList);
     }
 

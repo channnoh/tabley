@@ -8,7 +8,7 @@ import com.zerobase.tabley.exception.CustomException;
 import com.zerobase.tabley.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,13 +93,26 @@ public class StoreService {
     }
 
     /**
-     * Pageable parameter로 받아와서 정렬 기준에 따라 JPA paging 처리
+     * 정렬기준 parameter로 받아와서 정렬 기준에 따라 JPA paging 처리
      * default는 매장이름순
      */
 
-    public Page<StoreInfoDto> getStorePage(Pageable pageable) {
-        Page<Store> page = storeRepository.findAll(pageable);
-        return StoreInfoDto.toDto(page);
+    public Page<StoreInfoDto> getStorePage(Integer page, String criteria) {
+        Page<Store> stores = null;
+
+        switch (criteria) {
+            case "rating":
+                stores = storeRepository.findAllByOrderByRatingDesc(PageRequest.of(page, 10));
+                break;
+            case "distance":
+                stores = storeRepository.findAllByOrderByDistanceDesc(PageRequest.of(page, 10));
+                break;
+            default:
+                stores = storeRepository.findAllByOrderByStoreNameDesc(PageRequest.of(page, 10));
+
+        }
+
+        return stores.map(StoreInfoDto::fromEntity);
     }
 
 
