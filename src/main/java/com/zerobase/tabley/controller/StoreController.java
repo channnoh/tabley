@@ -29,7 +29,7 @@ public class StoreController {
      * @PreAuthorize: 메서드 실행하기 전에 권한 검사
      */
 
-    @ApiOperation("매장등록")
+    @ApiOperation("매장등록 API 입니다.")
     @PreAuthorize("hasRole('PARTNER')")
     @PostMapping("/register")
     public ResponseEntity<?> registerStore(@RequestBody @Valid RegisterStoreDto.Request request) {
@@ -38,7 +38,7 @@ public class StoreController {
         return ResponseEntity.ok(savedStore);
     }
 
-    @ApiOperation("매장정보 수정")
+    @ApiOperation("매장정보 수정 API 입니다.")
     @PreAuthorize("hasRole('PARTNER')")
     @PostMapping("/{userId}")
     public String updateStore(@PathVariable String userId,
@@ -48,7 +48,7 @@ public class StoreController {
         return "매장정보 수정 완료";
     }
 
-    @ApiOperation("매장삭제")
+    @ApiOperation("매장삭제 API 입니다.")
     @PreAuthorize("hasRole('PARTNER')")
     @DeleteMapping("/{storeName}")
     public String deleteStore(@PathVariable String storeName) {
@@ -61,7 +61,7 @@ public class StoreController {
      *  가정렬 기준에 따른 매장 목록 조회
      */
 
-    @ApiOperation("정렬 기준에 맞게 매장 목록 조회")
+    @ApiOperation("정렬 기준에 맞게 매장 목록 조회하는 API 입니다.")
     @GetMapping("/list")
     public ResponseEntity<?> getStoreList(@PageableDefault(sort = "storeName") Pageable pageable) {
         Page<StoreInfoDto> storeList = storeService.getStorePage(pageable);
@@ -73,7 +73,7 @@ public class StoreController {
      *  매장 상세 정보 조회
      */
 
-    @ApiOperation("매장 상세 정보 조회")
+    @ApiOperation("매장 상세 정보 조회 API 입니다.")
     @GetMapping("/info/{storeName}")
     public ResponseEntity<?> getStoreInfo(@PathVariable String storeName) {
         StoreInfoDto storeInfo = storeService.getStoreInfo(storeName);

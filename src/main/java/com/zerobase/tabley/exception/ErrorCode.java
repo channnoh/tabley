@@ -21,7 +21,12 @@ public enum ErrorCode {
     WRONG_RESERVATION_USER_INFORMATION(HttpStatus.BAD_REQUEST, "예약자 정보가 일치하지 않습니다."),
     UNAPPROVED_RESERVATION_BY_OWNER(HttpStatus.BAD_REQUEST, "매장 점주로 부터 승인되지 않은 예약입니다."),
     ALREADY_CONFIRMED_RESERVATION(HttpStatus.BAD_REQUEST, "이미 방문 확인이 완료된 예약입니다."),
-    RESERVATION_CHECK_IN_TIME_EXPIRED(HttpStatus.BAD_REQUEST, "예약 방문확인 시간이 지났습니다.");
+    RESERVATION_CHECK_IN_TIME_EXPIRED(HttpStatus.BAD_REQUEST, "예약 방문확인 시간이 지났습니다."),
+    ACCESS_DENIED_REVIEW_WRITE(HttpStatus.BAD_REQUEST, "리뷰를 작성할 수 있는 권한이 없습니다."),
+    ACCESS_DENIED_REVIEW_AFTER_RESERVATION(HttpStatus.BAD_REQUEST, "매장 사용 후에 리뷰를 작성할 수 있습니다."),
+    REVIEW_WRITE_PERIOD_EXPIRED(HttpStatus.BAD_REQUEST, "리뷰 작성 기간이 지났습니다."),
+    REVIEW_NOT_FOUND(HttpStatus.BAD_REQUEST, "작성된 리뷰가 없습니다."),
+    NO_CHANGES_DETECTED(HttpStatus.BAD_REQUEST, "변경 내역이 없습니다.");
 
 
 

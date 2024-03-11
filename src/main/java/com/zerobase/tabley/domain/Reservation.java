@@ -1,12 +1,14 @@
 package com.zerobase.tabley.domain;
 
 import com.zerobase.tabley.type.ReservationStatus;
+import com.zerobase.tabley.type.ReviewStatus;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 import static com.zerobase.tabley.type.ReservationStatus.WAITING;
+import static com.zerobase.tabley.type.ReviewStatus.NOT_WRITTEN;
 
 @Entity
 @Builder
@@ -27,6 +29,10 @@ public class Reservation extends BaseEntity {
     @Builder.Default
     private ReservationStatus reservationStatus = WAITING;
 
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private ReviewStatus reviewStatus = NOT_WRITTEN;
+
     /**
      * JPA 연관관계 매핑
      * 연관관계 주인은 외래키를 가진 쪽(Many 쪽) -> 외래키를 관리
@@ -42,6 +48,11 @@ public class Reservation extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "STORE_ID")
     private Store store;
+
+
+    @OneToOne
+    @JoinColumn(name = "REVIEW_ID")
+    private Review review;
 
 
 }

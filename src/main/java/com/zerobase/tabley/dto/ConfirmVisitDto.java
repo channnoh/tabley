@@ -26,7 +26,7 @@ public class ConfirmVisitDto {
     @AllArgsConstructor
     @Builder
     public static class Response {
-        private String message = "방문 확인이 완료되었습나다.";
+        private String message;
 
         public static ConfirmVisitDto.Response fromEntity(String storeName) {
             return Response.builder()

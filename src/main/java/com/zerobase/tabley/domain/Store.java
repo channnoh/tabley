@@ -48,11 +48,19 @@ public class Store extends BaseEntity {
     private Double rating = 0.0;
 
     @OneToMany(mappedBy = "store")
-    private List<Reservation> reservationList = new ArrayList<>();
+    private List<Reservation> reservations = new ArrayList<>();
 
 
-//    @OneToMany
-//    private List<Review> reviews;
+    @OneToMany(mappedBy = "store")
+    private List<Review> reviews = new ArrayList<>();
 
+    public void updateRating() {
+        double totalRating = reviews.stream()
+                .mapToDouble(Review::getRating)
+                .sum();
+        int totalCount = reviews.size();
 
+        this.rating = (double) Math.round(totalRating / totalCount * 10) / 10;
+
+    }
 }

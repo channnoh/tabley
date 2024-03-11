@@ -10,10 +10,22 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Review extends BaseEntity{
+public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "REVIEW_ID")
     private Long id;
+
+    private Double rating;
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "STORE_ID")
+    private Store store;
+
+    @OneToOne(mappedBy = "review")
+    private Reservation reservation;
+
+
 }
