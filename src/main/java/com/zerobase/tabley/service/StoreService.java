@@ -44,7 +44,7 @@ public class StoreService {
      EntityTransaction tx = em.getTransaction();
      tx.begin(); //트랜잭션 시작
      Store store = em.find(Store.class, id);
-     store.chanegeStoreName(storeName); // 엔티티만 변경
+     store.changeStoreName(storeName); // 엔티티만 변경
      tx.commit(); //트랜잭션 커밋
      **/
 
