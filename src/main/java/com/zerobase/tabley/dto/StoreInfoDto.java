@@ -3,7 +3,6 @@ package com.zerobase.tabley.dto;
 import com.zerobase.tabley.domain.Store;
 import com.zerobase.tabley.type.StoreCategory;
 import lombok.*;
-import org.springframework.data.domain.Page;
 
 import java.time.LocalTime;
 

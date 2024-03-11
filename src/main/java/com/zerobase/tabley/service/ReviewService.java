@@ -9,7 +9,6 @@ import com.zerobase.tabley.dto.WriteReviewDto;
 import com.zerobase.tabley.exception.CustomException;
 import com.zerobase.tabley.repository.ReservationRepository;
 import com.zerobase.tabley.repository.ReviewRepository;
-import com.zerobase.tabley.type.MemberType;
 import com.zerobase.tabley.type.ReservationStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
