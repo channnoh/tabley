@@ -24,7 +24,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 
     Page<Store> findAllByOrderByRatingDesc(Pageable pageable);
 
-    Page<Store> findAllByOrderByDistanceDesc(Pageable pageable);
+//    Page<Store> findAllByOrderByDistanceDesc(Pageable pageable);
 
     Optional<Store> findById(Long id);
 }

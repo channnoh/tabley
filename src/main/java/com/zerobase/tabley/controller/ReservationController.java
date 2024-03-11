@@ -36,7 +36,7 @@ public class ReservationController {
         return ResponseEntity.ok(reservedStore);
     }
 
-    @ApiOperation("매장 점주가 예약 정보를 승인/거절하는 API 입니다.")
+    @ApiOperation("매장 점주가 예약을 승인/거절하는 API 입니다.")
     @PreAuthorize("hasRole('PARTNER')")
     @PostMapping("/approve/{reservationId}")
     public ResponseEntity<?> approveReservation(@PathVariable Long reservationId,
@@ -47,7 +47,7 @@ public class ReservationController {
         return ResponseEntity.ok(approveReservationDTO);
     }
 
-    @ApiOperation("매장 점주가 헤당 날짜의 예약 정보 조회하는 API 입니다.")
+    @ApiOperation("매장 점주가 해당 날짜의 예약 정보 조회하는 API 입니다.")
     @PreAuthorize("hasRole('PARTNER')")
     @GetMapping("/list")
     public ResponseEntity<?> reservationListForPartner(@RequestParam(value = "dateTime") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,

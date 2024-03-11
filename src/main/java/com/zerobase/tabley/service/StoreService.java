@@ -105,9 +105,9 @@ public class StoreService {
             case "rating":
                 stores = storeRepository.findAllByOrderByRatingDesc(PageRequest.of(page, 10));
                 break;
-            case "distance":
-                stores = storeRepository.findAllByOrderByDistanceDesc(PageRequest.of(page, 10));
-                break;
+//            case "distance":
+//                stores = storeRepository.findAllByOrderByDistanceDesc(PageRequest.of(page, 10));
+//                break;
             default:
                 stores = storeRepository.findAllByOrderByStoreNameDesc(PageRequest.of(page, 10));
 
