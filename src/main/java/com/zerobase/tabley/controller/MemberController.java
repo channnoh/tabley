@@ -24,7 +24,8 @@ public class MemberController {
     private final MemberService memberService;
     private final TokenProvider tokenProvider;
 
-    @ApiOperation("회원가입")
+
+    @ApiOperation("회원가입 API 입니다.")
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody @Valid SignUpDto request) {
         // 회원가입을 위한 API
@@ -33,7 +34,8 @@ public class MemberController {
         return ResponseEntity.ok(member);
     }
 
-    @ApiOperation("로그인")
+
+    @ApiOperation("로그인 API 입니다.")
     @PostMapping("/signin")
     public ResponseEntity<?> signIn(@RequestBody SignInDto request) {
         // 로그인용 API

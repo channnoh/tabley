@@ -131,6 +131,10 @@ public class ReservationService {
         return ApproveReservationDTO.Response.fromEntity(reservation);
     }
 
+    /**
+     * 예약자가 예약 시간 10분전에 매장을 방문 했는지 확인 하는 메서드
+     */
+
     @Transactional
     public ConfirmVisitDto.Response confirmVisit(Long reservationId, ConfirmVisitDto.Request confirmVisitRequest) {
 
@@ -139,6 +143,10 @@ public class ReservationService {
 
         return ConfirmVisitDto.Response.fromEntity(reservation.getStore().getStoreName());
     }
+
+    /**
+     * 예약자 방문확인 유효성 검증
+     */
 
     private Reservation validateVisitConfirmation(Long reservationId, ConfirmVisitDto.Request confirmVisitRequest) {
 

@@ -31,7 +31,7 @@ public class ReviewService {
     private final ReservationRepository reservationRepository;
 
     /**
-     * 리뷰작성 메서드
+     * 리뷰작성 메서드(예약자만 작성 가능)
      * 1. 예약 존재 여부
      * 2. 예약 후 매장 사용여부
      * 3. 예약자와 리뷰 작성하려는 유저 같은지
@@ -70,7 +70,7 @@ public class ReviewService {
     }
 
     /**
-     * 리뷰 수정 메서드
+     * 리뷰 수정 메서드(예약자만 수정 가능)
      * 1. 예약 존재 여부
      * 2. 리뷰 작성 여부
      * 3. 기존 리뷰와 변경 여부
@@ -100,6 +100,11 @@ public class ReviewService {
 
         return UpdateReviewDto.Response.from(updatedReview);
     }
+
+    /**
+     * 리뷰 삭제 메서드
+     * 예약자와 점주 모두 삭제 가능
+     */
 
     @Transactional
     public DeleteReviewDto deleteReview(Long reviewId, Member member) {

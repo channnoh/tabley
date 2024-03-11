@@ -25,6 +25,7 @@ public class StoreService {
      * 파트너 한명 당 매장 하나 등록가능
      * 매장 상호는 중복을 허용하지 않는다고 가정
      */
+
     public RegisterStoreDto.Response addStore(RegisterStoreDto.Request request) {
         if (storeRepository.existsStoresByUserId(request.getUserId())) {
             throw new CustomException(ALREADY_REGISTER_STORE_USER);

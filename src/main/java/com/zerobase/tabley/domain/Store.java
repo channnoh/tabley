@@ -54,6 +54,9 @@ public class Store extends BaseEntity {
     @OneToMany(mappedBy = "store")
     private List<Review> reviews = new ArrayList<>();
 
+    /**
+     * 리뷰 작성 되면 매장의 rating update
+     */
     public void updateRating() {
         double totalRating = reviews.stream()
                 .mapToDouble(Review::getRating)
